@@ -1,0 +1,51 @@
+{
+  "packages": [
+    "mariadb@latest",
+    "apache@latest",
+    "php@latest",
+    "php84Extensions.xdebug@latest",
+    "php84Packages.composer@latest",
+    "wordpress@latest",
+    "wp-cli@latest",
+    "adminerevo@latest"
+  ],
+  "env": {
+    "DB_HOST": "127.0.0.1",
+    "DB_NAME": "wordpress",
+    "DB_USER": "user",
+    "DB_PASSWORD": "password",
+    "MYSQL_UNIX_PORT": "/tmp/devbox-mysql.sock",
+    "HTTPD_PORT": "8081",
+    "NGINX_PORT": "8081",
+    "PHPFPM_PORT": "8082",
+    "WEBSERVER": "apache",
+    "WP_URL": "http://localhost:8081",
+    "WP_TITLE": "Devbox WordPress",
+    "WP_ADMIN_USER": "admin",
+    "WP_ADMIN_PASSWORD": "password",
+    "WP_ADMIN_EMAIL": "admin@devbox.local"
+  },
+  "shell": {
+    "scripts": {
+      "setup_devbox": [
+        "bash scripts/setup_db.sh",
+        "bash scripts/setup_wordpress.sh",
+        "bash scripts/configure_php.sh",
+        "bash scripts/setup_plugins.sh",
+        "bash scripts/configure_htaccess.sh"
+      ],
+      "setup_users": [
+        "bash scripts/setup_users.sh"
+      ],
+      "setup_woocommerce": [
+        "bash scripts/setup_woocommerce.sh"
+      ],
+      "setup_elementor": [
+        "bash scripts/setup_elementor.sh"
+      ],
+      "setup_nginx": [ 
+	"bash scripts/setup_nginx.sh"
+      ] 
+    }
+  }
+}

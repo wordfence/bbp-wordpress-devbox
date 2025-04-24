@@ -1,0 +1,4 @@
+# Devbox environment (local build artifacts)
+devbox.d/
+.devbox/
+devbox.lock

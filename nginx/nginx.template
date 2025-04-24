@@ -1,0 +1,33 @@
+events {
+    worker_connections 1024;
+}
+http {
+    include ${PROJECT_ROOT}/nginx/includes/mime-types.conf;
+    server {
+        listen 127.0.0.1:${NGINX_PORT};
+        root ${WEB_ROOT};
+        index index.php index.html;
+        server_name localhost;
+        server_tokens off;
+
+        access_log access.log;
+        error_log error.log error;
+
+        include ${PROJECT_ROOT}/nginx/includes/wordpress.conf;
+        include ${PROJECT_ROOT}/nginx/includes/static.conf;
+        include ${PROJECT_ROOT}/nginx/includes/wp-admin-rewrite.conf;
+
+        location ~ \.php$ {
+            try_files $uri =404;
+            include fastcgi.conf;
+            fastcgi_pass 127.0.0.1:${PHPFPM_PORT};
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        }
+
+        error_page 404 = @wperror;
+        location @wperror {
+            rewrite ^/(.*)$ /index.php?q=$1 last;
+        }
+    }
+}
